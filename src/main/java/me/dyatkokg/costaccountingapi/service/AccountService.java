@@ -10,4 +10,8 @@ public interface AccountService {
     Account addAccount(AccountDTO account);
 
     Account editAccount(UUID id, AccountDTO accountDTO);
+
+    Account getAccount(UUID id);
+
+    void deleteAccount(UUID id);
 }

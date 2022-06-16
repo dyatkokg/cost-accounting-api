@@ -18,15 +18,23 @@ public class AccountController {
 
     //todo: не забыть дабавить идентификацию пользователя
     @PostMapping
-    public ResponseEntity<?> addAccount(@RequestBody @Validated AccountDTO account){
+    public ResponseEntity<?> addAccount(@RequestBody @Validated AccountDTO account) {
         return ResponseEntity.ok(service.addAccount(account));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> editAccount(@PathVariable("id")UUID id,@RequestBody AccountDTO accountDTO){
-        return ResponseEntity.ok(service.editAccount(id,accountDTO));
+    public ResponseEntity<?> editAccount(@PathVariable("id") UUID id, @RequestBody AccountDTO accountDTO) {
+        return ResponseEntity.ok(service.editAccount(id, accountDTO));
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<?> getAccount(@PathVariable("id") UUID id) {
+        return ResponseEntity.ok(service.getAccount(id));
+    }
 
-
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteAccount(@PathVariable("id") UUID id) {
+        service.deleteAccount(id);
+        return ResponseEntity.noContent().build();
+    }
 }

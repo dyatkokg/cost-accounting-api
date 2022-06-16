@@ -28,5 +28,15 @@ public class AccountServiceImpl implements AccountService {
         return repository.save(account);
     }
 
+    @Override
+    public Account getAccount(UUID id) {
+        return repository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    @Override
+    public void deleteAccount(UUID id) {
+        repository.deleteById(id);
+    }
+
 
 }
