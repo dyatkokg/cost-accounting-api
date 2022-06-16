@@ -8,6 +8,8 @@ import me.dyatkokg.costaccountingapi.repository.AccountRepository;
 import me.dyatkokg.costaccountingapi.service.AccountService;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
@@ -17,6 +19,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account addAccount(AccountDTO account) {
         return repository.save(mapper.toEntity(account));
+    }
+
+    @Override
+    public Account editAccount(UUID id, AccountDTO accountDTO) {
+        Account account = mapper.toEntity(accountDTO);
+        account.setId(id);
+        return repository.save(account);
     }
 
 
