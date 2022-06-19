@@ -3,6 +3,7 @@ package me.dyatkokg.costaccountingapi.service;
 import me.dyatkokg.costaccountingapi.dto.AccountDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface AccountService {
@@ -13,4 +14,6 @@ public interface AccountService {
     Account getAccount(UUID id);
 
     void deleteAccount(UUID id);
+
+    List<Account> getAll();
 }

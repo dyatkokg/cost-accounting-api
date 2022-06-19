@@ -9,5 +9,4 @@ public interface ClientRepository extends CrudRepository<Client, UUID> {
 
     Client findClientByUsername(String username);
 
-    Client findClientByPassword(String password);
 }

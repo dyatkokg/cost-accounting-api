@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -38,6 +39,9 @@ public class AccountController {
         return ResponseEntity.noContent().build();
     }
 
-
+    @GetMapping("all")
+    public ResponseEntity<List<Account>> getAllByClient(){
+        return ResponseEntity.ok(service.getAll());
+    }
 
 }
