@@ -6,6 +6,9 @@ import me.dyatkokg.costaccountingapi.entity.Client;
 import me.dyatkokg.costaccountingapi.mapper.ClientMapper;
 import me.dyatkokg.costaccountingapi.repository.ClientRepository;
 import me.dyatkokg.costaccountingapi.service.ClientService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,8 @@ public class ClientServiceImpl implements ClientService {
 
     private final PasswordEncoder encoder;
 
+
+
     @Override
     public Client register(ClientDTO dto) {
         Client client = mapper.toEntity(dto);
@@ -28,5 +33,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
-
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return repository.findClientByUsername(username);
+    }
 }
