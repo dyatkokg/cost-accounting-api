@@ -1,5 +1,6 @@
 package me.dyatkokg.costaccountingapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,12 +29,15 @@ public class Client implements UserDetails {
 
     private String lastName;
 
+    @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Account> accounts;
 
     @Override

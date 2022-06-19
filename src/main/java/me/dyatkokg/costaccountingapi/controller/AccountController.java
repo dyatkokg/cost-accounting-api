@@ -17,7 +17,6 @@ public class AccountController {
 
     private final AccountService service;
 
-    //todo: не забыть дабавить идентификацию пользователя
     @PostMapping
     public ResponseEntity<Account> addAccount(@RequestBody @Validated AccountDTO account) {
         return ResponseEntity.ok(service.addAccount(account));

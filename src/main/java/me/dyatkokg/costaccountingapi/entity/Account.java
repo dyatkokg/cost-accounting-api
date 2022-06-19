@@ -25,4 +25,7 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private Currency currency;
 
+    @ManyToOne
+    private Client client;
+
 }

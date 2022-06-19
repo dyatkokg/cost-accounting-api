@@ -3,6 +3,7 @@ package me.dyatkokg.costaccountingapi.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.dyatkokg.costaccountingapi.entity.Client;
 import me.dyatkokg.costaccountingapi.entity.Currency;
 
 import javax.validation.constraints.NotBlank;
@@ -21,4 +22,6 @@ public class AccountDTO {
 
     @NotNull(message = "Currency should be presented")
     private Currency currency;
+
+    private Client client;
 }

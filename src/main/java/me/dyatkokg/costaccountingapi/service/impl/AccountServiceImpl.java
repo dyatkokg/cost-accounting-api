@@ -3,9 +3,13 @@ package me.dyatkokg.costaccountingapi.service.impl;
 import lombok.RequiredArgsConstructor;
 import me.dyatkokg.costaccountingapi.dto.AccountDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
+import me.dyatkokg.costaccountingapi.entity.Client;
 import me.dyatkokg.costaccountingapi.mapper.AccountMapper;
 import me.dyatkokg.costaccountingapi.repository.AccountRepository;
+import me.dyatkokg.costaccountingapi.repository.ClientRepository;
 import me.dyatkokg.costaccountingapi.service.AccountService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -18,6 +22,7 @@ public class AccountServiceImpl implements AccountService {
     private final AccountMapper mapper;
     @Override
     public Account addAccount(AccountDTO account) {
+      account.setClient((Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return repository.save(mapper.toEntity(account));
     }
 
