@@ -1,13 +1,13 @@
 package me.dyatkokg.costaccountingapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import me.dyatkokg.costaccountingapi.config.SecurityUtils;
 import me.dyatkokg.costaccountingapi.dto.AccountDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
 import me.dyatkokg.costaccountingapi.entity.Client;
 import me.dyatkokg.costaccountingapi.mapper.AccountMapper;
 import me.dyatkokg.costaccountingapi.repository.AccountRepository;
 import me.dyatkokg.costaccountingapi.service.AccountService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account addAccount(AccountDTO account) {
-      account.setClient((Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+      account.setClient((Client) SecurityUtils.getPrincipal());
         return repository.save(mapper.toEntity(account));
     }
 
@@ -47,9 +47,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<Account> getAll() {
-        Client principal = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Client principal = (Client) SecurityUtils.getPrincipal();
        return new ArrayList<>(repository.findAccountByClientId(principal.getId()));
     }
+
 
 
 }

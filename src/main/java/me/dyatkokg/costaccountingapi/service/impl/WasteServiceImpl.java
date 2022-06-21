@@ -1,8 +1,11 @@
 package me.dyatkokg.costaccountingapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import me.dyatkokg.costaccountingapi.config.SecurityUtils;
 import me.dyatkokg.costaccountingapi.dto.WasteDTO;
+import me.dyatkokg.costaccountingapi.dto.WasteDateDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
+import me.dyatkokg.costaccountingapi.entity.Client;
 import me.dyatkokg.costaccountingapi.entity.Waste;
 import me.dyatkokg.costaccountingapi.mapper.AccountMapper;
 import me.dyatkokg.costaccountingapi.mapper.WasteMapper;
@@ -11,10 +14,12 @@ import me.dyatkokg.costaccountingapi.repository.CategoryRepository;
 import me.dyatkokg.costaccountingapi.repository.WasteRepository;
 import me.dyatkokg.costaccountingapi.service.AccountService;
 import me.dyatkokg.costaccountingapi.service.WasteService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -50,7 +55,11 @@ public class WasteServiceImpl implements WasteService {
     }
 
     @Override
-    public List<Waste> getAllByClient() {
-        return null;
+    public Page<WasteDTO> getAllByClient(int page, int size, WasteDateDTO viewDTO) {
+        Client principal=(Client) SecurityUtils.getPrincipal();
+        Pageable pageable = PageRequest.of(size, page);
+        return repository.findWasteByAccount_ClientIdAndDateBetween(principal.getId(),pageable,
+                viewDTO.getStartDate(),viewDTO.getEndDate()).map(mapper::toDTO);
     }
+
 }

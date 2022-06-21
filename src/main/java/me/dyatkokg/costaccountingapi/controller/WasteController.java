@@ -2,13 +2,14 @@ package me.dyatkokg.costaccountingapi.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.dyatkokg.costaccountingapi.dto.WasteDTO;
+import me.dyatkokg.costaccountingapi.dto.WasteDateDTO;
 import me.dyatkokg.costaccountingapi.entity.Waste;
 import me.dyatkokg.costaccountingapi.service.WasteService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,7 +30,9 @@ public class WasteController {
     }
 
     @GetMapping("all")
-    public ResponseEntity<List<Waste>> getAllWasteByClient() {
-        return ResponseEntity.ok(service.getAllByClient());
+    public ResponseEntity<Page<WasteDTO>> getAllWasteByClientsAccount(@RequestParam(value = "size", required = false, defaultValue = "10") int page,
+                                                                      @RequestParam(value = "page", required = false, defaultValue = "0") int size
+            , @RequestBody WasteDateDTO viewDTO) {
+        return ResponseEntity.ok(service.getAllByClient(page, size, viewDTO));
     }
 }
