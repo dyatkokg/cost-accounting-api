@@ -46,7 +46,7 @@ public class WasteServiceImpl implements WasteService {
 
     @Override
     public Waste getWaste(UUID id) {
-        return null;
+        return repository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     @Override

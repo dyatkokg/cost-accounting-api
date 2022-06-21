@@ -33,6 +33,8 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/account/**").authenticated()
+                .antMatchers("/category/**").authenticated()
+                .antMatchers("/waste/**").authenticated()
                 .anyRequest().permitAll()
                 .and().httpBasic();
         return http.build();
