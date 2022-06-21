@@ -5,6 +5,7 @@ import me.dyatkokg.costaccountingapi.config.SecurityUtils;
 import me.dyatkokg.costaccountingapi.dto.AccountDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
 import me.dyatkokg.costaccountingapi.entity.Client;
+import me.dyatkokg.costaccountingapi.exception.AccountNotFoundException;
 import me.dyatkokg.costaccountingapi.mapper.AccountMapper;
 import me.dyatkokg.costaccountingapi.repository.AccountRepository;
 import me.dyatkokg.costaccountingapi.service.AccountService;
@@ -37,7 +38,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getAccount(UUID id) {
-        return repository.findById(id).orElseThrow(RuntimeException::new);
+        return repository.findById(id).orElseThrow(AccountNotFoundException::new);
     }
 
     @Override

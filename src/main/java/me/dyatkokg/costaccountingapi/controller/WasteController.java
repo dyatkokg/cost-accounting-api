@@ -31,8 +31,9 @@ public class WasteController {
 
     @GetMapping("all")
     public ResponseEntity<Page<WasteDTO>> getAllWasteByClientsAccount(@RequestParam(value = "size", required = false, defaultValue = "10") int page,
-                                                                      @RequestParam(value = "page", required = false, defaultValue = "0") int size
-            , @RequestBody WasteDateDTO viewDTO) {
+                                                                      @RequestParam(value = "page", required = false, defaultValue = "0") int size,
+                                                                      @RequestBody WasteDateDTO viewDTO) {
         return ResponseEntity.ok(service.getAllByClient(page, size, viewDTO));
     }
+
 }

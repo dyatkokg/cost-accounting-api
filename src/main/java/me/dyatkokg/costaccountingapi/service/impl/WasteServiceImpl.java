@@ -7,6 +7,8 @@ import me.dyatkokg.costaccountingapi.dto.WasteDateDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
 import me.dyatkokg.costaccountingapi.entity.Client;
 import me.dyatkokg.costaccountingapi.entity.Waste;
+import me.dyatkokg.costaccountingapi.exception.AccountNotFoundException;
+import me.dyatkokg.costaccountingapi.exception.WasteNotFoundException;
 import me.dyatkokg.costaccountingapi.mapper.AccountMapper;
 import me.dyatkokg.costaccountingapi.mapper.WasteMapper;
 import me.dyatkokg.costaccountingapi.repository.AccountRepository;
@@ -43,7 +45,7 @@ public class WasteServiceImpl implements WasteService {
         Waste waste = mapper.toEntity(wasteDTO);
         waste.setDate(LocalDate.now());
         waste.setCategory(categoryRepository.findCategoryByName(wasteDTO.getCategory()));
-        Account account = accountRepository.findById(wasteDTO.getAccountId()).orElseThrow(RuntimeException::new);
+        Account account = accountRepository.findById(wasteDTO.getAccountId()).orElseThrow(AccountNotFoundException::new);
         account.setBalance(account.getBalance().subtract(wasteDTO.getAmountSpent()));
         accountService.editAccount(account.getId(),accountMapper.toDTO(account));
         return mapper.toDTO(repository.save(waste));
@@ -51,7 +53,7 @@ public class WasteServiceImpl implements WasteService {
 
     @Override
     public Waste getWaste(UUID id) {
-        return repository.findById(id).orElseThrow(RuntimeException::new);
+        return repository.findById(id).orElseThrow(WasteNotFoundException::new);
     }
 
     @Override
