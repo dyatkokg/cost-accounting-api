@@ -3,6 +3,7 @@ package me.dyatkokg.costaccountingapi.controller;
 import lombok.RequiredArgsConstructor;
 import me.dyatkokg.costaccountingapi.dto.WasteDTO;
 import me.dyatkokg.costaccountingapi.dto.WasteDateDTO;
+import me.dyatkokg.costaccountingapi.dto.WasteSumCategoryDTO;
 import me.dyatkokg.costaccountingapi.entity.Waste;
 import me.dyatkokg.costaccountingapi.service.WasteService;
 import org.springframework.data.domain.Page;
@@ -36,4 +37,8 @@ public class WasteController {
         return ResponseEntity.ok(service.getAllByClient(page, size, viewDTO));
     }
 
+    @GetMapping("sum")
+    public ResponseEntity<WasteSumCategoryDTO> getSumWasteByCategory(@RequestBody WasteSumCategoryDTO sumDTO) {
+        return ResponseEntity.ok(service.getSumAllWasteByCategory(sumDTO));
+    }
 }

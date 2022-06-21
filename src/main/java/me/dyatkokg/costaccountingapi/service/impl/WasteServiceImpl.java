@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.dyatkokg.costaccountingapi.config.SecurityUtils;
 import me.dyatkokg.costaccountingapi.dto.WasteDTO;
 import me.dyatkokg.costaccountingapi.dto.WasteDateDTO;
+import me.dyatkokg.costaccountingapi.dto.WasteSumCategoryDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
 import me.dyatkokg.costaccountingapi.entity.Client;
 import me.dyatkokg.costaccountingapi.entity.Waste;
@@ -19,9 +20,12 @@ import me.dyatkokg.costaccountingapi.service.WasteService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -47,7 +51,7 @@ public class WasteServiceImpl implements WasteService {
         waste.setCategory(categoryRepository.findCategoryByName(wasteDTO.getCategory()));
         Account account = accountRepository.findById(wasteDTO.getAccountId()).orElseThrow(AccountNotFoundException::new);
         account.setBalance(account.getBalance().subtract(wasteDTO.getAmountSpent()));
-        accountService.editAccount(account.getId(),accountMapper.toDTO(account));
+        accountService.editAccount(account.getId(), accountMapper.toDTO(account));
         return mapper.toDTO(repository.save(waste));
     }
 
@@ -58,10 +62,20 @@ public class WasteServiceImpl implements WasteService {
 
     @Override
     public Page<WasteDTO> getAllByClient(int page, int size, WasteDateDTO viewDTO) {
-        Client principal=(Client) SecurityUtils.getPrincipal();
-        Pageable pageable = PageRequest.of(size, page);
-        return repository.findWasteByAccount_ClientIdAndDateBetween(principal.getId(),pageable,
-                viewDTO.getStartDate(),viewDTO.getEndDate()).map(mapper::toDTO);
+        Client principal = (Client) SecurityUtils.getPrincipal();
+        Pageable pageable = PageRequest.of(size, page, Sort.Direction.DESC, "date");
+        return repository.findWasteByAccount_ClientIdAndDateBetween(principal.getId(), pageable,
+                viewDTO.getStartDate(), viewDTO.getEndDate()).map(mapper::toDTO);
+    }
+
+    public WasteSumCategoryDTO getSumAllWasteByCategory(WasteSumCategoryDTO wasteSumCategoryDTO) {
+        List<Waste> allByCategory_nameAndDateBetween = repository.findAllByCategory_NameAndDateBetween(wasteSumCategoryDTO.getCategory(),
+                wasteSumCategoryDTO.getStartDate(), wasteSumCategoryDTO.getEndDate());
+            BigDecimal sum = allByCategory_nameAndDateBetween.stream()
+                    .map(Waste::getAmountSpent)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            wasteSumCategoryDTO.setSumWaste(sum);
+        return wasteSumCategoryDTO;
     }
 
 }
