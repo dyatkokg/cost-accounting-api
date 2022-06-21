@@ -1,8 +1,10 @@
 package me.dyatkokg.costaccountingapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import me.dyatkokg.costaccountingapi.config.SecurityUtils;
 import me.dyatkokg.costaccountingapi.dto.CategoryDTO;
 import me.dyatkokg.costaccountingapi.entity.Category;
+import me.dyatkokg.costaccountingapi.entity.Client;
 import me.dyatkokg.costaccountingapi.mapper.CategoryMapper;
 import me.dyatkokg.costaccountingapi.repository.CategoryRepository;
 import me.dyatkokg.costaccountingapi.service.CategoryService;
@@ -20,6 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category addCategory(CategoryDTO category) {
+        category.setClient((Client) SecurityUtils.getPrincipal());
         return repository.save(mapper.toEntity(category));
     }
 
@@ -30,6 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAll() {
-        return repository.findAll();
+        Client principal = (Client) SecurityUtils.getPrincipal();
+        return repository.findAllByClientId(principal.getId());
     }
 }

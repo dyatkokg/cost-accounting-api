@@ -3,6 +3,7 @@ package me.dyatkokg.costaccountingapi.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.dyatkokg.costaccountingapi.entity.Client;
 
 @Data
 @AllArgsConstructor
@@ -10,4 +11,6 @@ import lombok.NoArgsConstructor;
 public class CategoryDTO {
 
     private String name;
+
+    private Client client;
 }
