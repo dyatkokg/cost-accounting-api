@@ -8,7 +8,6 @@ import me.dyatkokg.costaccountingapi.repository.CategoryRepository;
 import me.dyatkokg.costaccountingapi.service.CategoryService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

@@ -7,7 +7,6 @@ import me.dyatkokg.costaccountingapi.mapper.ClientMapper;
 import me.dyatkokg.costaccountingapi.repository.ClientRepository;
 import me.dyatkokg.costaccountingapi.service.ClientService;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ public class ClientServiceImpl implements ClientService {
     private final ClientMapper mapper;
 
     private final PasswordEncoder encoder;
-
 
 
     @Override

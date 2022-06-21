@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface CategoryRepository extends CrudRepository<Category, UUID> {
 
     List<Category> findAll();
+
+    Category findCategoryByName(String name);
 }

@@ -11,4 +11,6 @@ public interface AccountMapper {
     @Mapping(target = "id",ignore = true)
     Account toEntity(AccountDTO dto);
 
+    AccountDTO toDTO(Account account);
+
 }
