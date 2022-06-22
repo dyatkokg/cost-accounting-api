@@ -20,7 +20,7 @@ public class IncomeController {
     private final IncomeService service;
 
     @PostMapping
-    public ResponseEntity<Income> addWaste(@RequestBody @Validated IncomeDTO incomeDTO) {
+    public ResponseEntity<IncomeDTO> addIncome(@RequestBody @Validated IncomeDTO incomeDTO) {
         return ResponseEntity.ok(service.addIncome(incomeDTO));
     }
 

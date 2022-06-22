@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import java.util.UUID;
 
 public interface IncomeService {
-    Income addIncome(IncomeDTO incomeDTO);
+    IncomeDTO addIncome(IncomeDTO incomeDTO);
 
     Income getIncome(UUID id);
 
