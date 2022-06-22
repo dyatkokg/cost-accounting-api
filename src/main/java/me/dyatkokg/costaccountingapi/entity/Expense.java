@@ -13,7 +13,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Income {
+public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,10 +22,10 @@ public class Income {
     @OneToOne
     private Account account;
 
-    private BigDecimal amountIncome;
+    private BigDecimal amountSpent;
 
     private LocalDate date;
 
     @ManyToOne
-    private IncomeCategory category;
+    private ExpenseCategory category;
 }

@@ -1,18 +1,18 @@
 package me.dyatkokg.costaccountingapi.mapper;
 
-import me.dyatkokg.costaccountingapi.dto.WasteDTO;
-import me.dyatkokg.costaccountingapi.entity.Waste;
+import me.dyatkokg.costaccountingapi.dto.ExpenseDTO;
+import me.dyatkokg.costaccountingapi.entity.Expense;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface WasteMapper {
+public interface ExpenseMapper {
 
     @Mapping(source = "accountId", target = "account.id")
     @Mapping(source = "category", target = "category.name")
-    Waste toEntity(WasteDTO dto);
+    Expense toEntity(ExpenseDTO dto);
 
     @Mapping(source = "account.id", target = "accountId")
     @Mapping(source = "category.name", target = "category")
-    WasteDTO toDTO(Waste waste);
+    ExpenseDTO toDTO(Expense expense);
 }

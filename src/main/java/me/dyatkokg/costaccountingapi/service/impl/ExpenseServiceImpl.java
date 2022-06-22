@@ -3,18 +3,18 @@ package me.dyatkokg.costaccountingapi.service.impl;
 import lombok.RequiredArgsConstructor;
 import me.dyatkokg.costaccountingapi.config.SecurityUtils;
 import me.dyatkokg.costaccountingapi.dto.DateDTO;
-import me.dyatkokg.costaccountingapi.dto.WasteDTO;
-import me.dyatkokg.costaccountingapi.dto.WasteSumCategoryDTO;
+import me.dyatkokg.costaccountingapi.dto.ExpenseDTO;
+import me.dyatkokg.costaccountingapi.dto.ExpenseSumCategoryDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
 import me.dyatkokg.costaccountingapi.entity.Client;
-import me.dyatkokg.costaccountingapi.entity.Waste;
-import me.dyatkokg.costaccountingapi.exception.WasteNotFoundException;
+import me.dyatkokg.costaccountingapi.entity.Expense;
+import me.dyatkokg.costaccountingapi.exception.ExpenseNotFoundException;
 import me.dyatkokg.costaccountingapi.mapper.AccountMapper;
-import me.dyatkokg.costaccountingapi.mapper.WasteMapper;
-import me.dyatkokg.costaccountingapi.repository.CategoryRepository;
-import me.dyatkokg.costaccountingapi.repository.WasteRepository;
+import me.dyatkokg.costaccountingapi.mapper.ExpenseMapper;
+import me.dyatkokg.costaccountingapi.repository.ExpenseCategoryRepository;
+import me.dyatkokg.costaccountingapi.repository.ExpenseRepository;
 import me.dyatkokg.costaccountingapi.service.AccountService;
-import me.dyatkokg.costaccountingapi.service.WasteService;
+import me.dyatkokg.costaccountingapi.service.ExpenseService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,42 +22,40 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class WasteServiceImpl implements WasteService {
+public class ExpenseServiceImpl implements ExpenseService {
 
-    private final WasteRepository repository;
+    private final ExpenseRepository repository;
 
-    private final WasteMapper mapper;
+    private final ExpenseMapper mapper;
 
     private final AccountService accountService;
 
     private final AccountMapper accountMapper;
 
-    private final CategoryRepository categoryRepository;
+    private final ExpenseCategoryRepository expenseCategoryRepository;
 
     @Override
-    public WasteDTO addWaste(WasteDTO wasteDTO) {
-        Waste waste = mapper.toEntity(wasteDTO);
-         //todo: дату принимать из тела запроса
-        waste.setCategory(categoryRepository.findCategoryByName(wasteDTO.getCategory()));
-        Account account = accountService.getAccount(wasteDTO.getAccountId());
-        account.setBalance(account.getBalance().subtract(wasteDTO.getAmountSpent()));
+    public ExpenseDTO addExpense(ExpenseDTO expenseDTO) {
+        Expense expense = mapper.toEntity(expenseDTO);
+        expense.setCategory(expenseCategoryRepository.findCategoryByName(expenseDTO.getCategory()));
+        Account account = accountService.getAccount(expenseDTO.getAccountId());
+        account.setBalance(account.getBalance().subtract(expenseDTO.getAmountSpent()));
         accountService.editAccount(account.getId(), accountMapper.toDTO(account));
-        return mapper.toDTO(repository.save(waste));
+        return mapper.toDTO(repository.save(expense));
     }
 
     @Override
-    public Waste getWaste(UUID id) {
-        return repository.findById(id).orElseThrow(WasteNotFoundException::new);
+    public Expense getExpense(UUID id) {
+        return repository.findById(id).orElseThrow(ExpenseNotFoundException::new);
     }
 
     @Override
-    public Page<WasteDTO> getAllByClient(int page, int size, DateDTO viewDTO) {
+    public Page<ExpenseDTO> getAllByClient(int page, int size, DateDTO viewDTO) {
         Client principal = (Client) SecurityUtils.getPrincipal();
         Pageable pageable = PageRequest.of(size, page, Sort.Direction.DESC, "date");
         return repository.findWasteByAccount_ClientIdAndDateBetween(principal.getId(), pageable,
@@ -65,11 +63,11 @@ public class WasteServiceImpl implements WasteService {
     }
 
     @Override
-    public WasteSumCategoryDTO getSumAllWasteByCategory(WasteSumCategoryDTO wasteSumCategoryDTO) {
-        List<Waste> allByCategory_nameAndDateBetween = repository.findAllByCategory_NameAndDateBetween(wasteSumCategoryDTO.getCategory(),
+    public ExpenseSumCategoryDTO getSumAllExpenseByCategory(ExpenseSumCategoryDTO wasteSumCategoryDTO) {
+        List<Expense> allByCategory_nameAndDateBetween = repository.findAllByCategory_NameAndDateBetween(wasteSumCategoryDTO.getCategory(),
                 wasteSumCategoryDTO.getStartDate(), wasteSumCategoryDTO.getEndDate());
         BigDecimal sum = allByCategory_nameAndDateBetween.stream()
-                .map(Waste::getAmountSpent)
+                .map(Expense::getAmountSpent)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         wasteSumCategoryDTO.setSumWaste(sum);
         return wasteSumCategoryDTO;

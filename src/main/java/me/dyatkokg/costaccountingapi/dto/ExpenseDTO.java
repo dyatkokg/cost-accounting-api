@@ -12,7 +12,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WasteDTO {
+public class ExpenseDTO {
 
     private UUID accountId;
 
@@ -21,6 +21,6 @@ public class WasteDTO {
 
     private LocalDate date;
 
-    @NotNull(message = "Category should be presented")
+    @NotNull(message = "ExpenseCategory should be presented")
     private String category;
 }

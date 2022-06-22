@@ -9,8 +9,10 @@ import org.mapstruct.Mapping;
 public interface IncomeMapper {
 
     @Mapping(source = "accountId", target = "account.id")
+    @Mapping(source = "category",target = "category.name")
     Income toEntity(IncomeDTO dto);
 
     @Mapping(source = "account.id", target = "accountId")
+    @Mapping(source = "category.name",target = "category")
     IncomeDTO toDTO(Income income);
 }

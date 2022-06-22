@@ -20,4 +20,7 @@ public class IncomeDTO {
     private BigDecimal amountIncome;
 
     private LocalDate date;
+
+    @NotNull(message = "Category income should be presented")
+    private String category;
 }

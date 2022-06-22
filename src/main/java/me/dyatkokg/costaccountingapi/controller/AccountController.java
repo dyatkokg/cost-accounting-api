@@ -44,4 +44,8 @@ public class AccountController {
         return ResponseEntity.ok(service.getAll());
     }
 
+    //todo: получение транзакций по конкретному счету, вывод за конкретный период:всего поступило,
+    // всего потрачено-без детализации
+
+
 }

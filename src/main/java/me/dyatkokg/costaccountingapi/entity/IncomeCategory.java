@@ -3,29 +3,24 @@ package me.dyatkokg.costaccountingapi.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.dyatkokg.costaccountingapi.utils.CategoryInterface;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Waste {
+public class IncomeCategory implements CategoryInterface {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    private String name;
+
     @OneToOne
-    private Account account;
+    private Client client;
 
-    private BigDecimal amountSpent;
-
-    private LocalDate date;
-
-    @ManyToOne
-    private Category category;
 }

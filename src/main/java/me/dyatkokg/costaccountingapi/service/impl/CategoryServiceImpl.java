@@ -3,14 +3,15 @@ package me.dyatkokg.costaccountingapi.service.impl;
 import lombok.RequiredArgsConstructor;
 import me.dyatkokg.costaccountingapi.config.SecurityUtils;
 import me.dyatkokg.costaccountingapi.dto.CategoryDTO;
-import me.dyatkokg.costaccountingapi.entity.Category;
 import me.dyatkokg.costaccountingapi.entity.Client;
-import me.dyatkokg.costaccountingapi.exception.CategoryAlreadyExistException;
 import me.dyatkokg.costaccountingapi.mapper.CategoryMapper;
-import me.dyatkokg.costaccountingapi.repository.CategoryRepository;
+import me.dyatkokg.costaccountingapi.repository.ExpenseCategoryRepository;
+import me.dyatkokg.costaccountingapi.repository.IncomeCategoryRepository;
 import me.dyatkokg.costaccountingapi.service.CategoryService;
+import me.dyatkokg.costaccountingapi.utils.CategoryInterface;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,26 +19,32 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository repository;
+    private final ExpenseCategoryRepository expenseRepository;
+
+    private final IncomeCategoryRepository incomeRepository;
+
     private final CategoryMapper mapper;
 
     @Override
-    public Category addCategory(CategoryDTO category) {
-        if (repository.existsCategoriesByName(category.getName())) {
-            throw new CategoryAlreadyExistException();
-        }
+    public CategoryInterface addCategory(CategoryDTO category) {
         category.setClient((Client) SecurityUtils.getPrincipal());
-        return repository.save(mapper.toEntity(category));
+        if (category.getType().equals("expense")) {
+            return expenseRepository.save(mapper.toExpenseEntity(category));
+        } else if (category.getType().equals("income")) {
+            return incomeRepository.save(mapper.toIncomeEntity(category));
+        } else throw new RuntimeException();
     }
+
+
 
     @Override
     public void deleteCategory(UUID id) {
-        repository.deleteById(id);
+        expenseRepository.deleteById(id);
     }
 
     @Override
-    public List<Category> getAll() {
+    public List<Object> getAll() {
         Client principal = (Client) SecurityUtils.getPrincipal();
-        return repository.findAllByClientId(principal.getId());
+        return Collections.singletonList(expenseRepository.findAllByClientId(principal.getId()));
     }
 }

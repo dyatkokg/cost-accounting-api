@@ -13,4 +13,6 @@ public class CategoryDTO {
     private String name;
 
     private Client client;
+
+    private String type;
 }

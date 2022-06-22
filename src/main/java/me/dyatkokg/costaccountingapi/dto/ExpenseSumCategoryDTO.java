@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WasteSumCategoryDTO {
+public class ExpenseSumCategoryDTO {
 
     private String category;
 
