@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .antMatchers("/account/**").authenticated()
                 .antMatchers("/category/**").authenticated()
                 .antMatchers("/waste/**").authenticated()
+                .antMatchers("/income/**").authenticated()
                 .anyRequest().permitAll()
                 .and().httpBasic();
         return http.build();
