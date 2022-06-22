@@ -43,7 +43,7 @@ public class WasteServiceImpl implements WasteService {
     @Override
     public WasteDTO addWaste(WasteDTO wasteDTO) {
         Waste waste = mapper.toEntity(wasteDTO);
-        waste.setDate(LocalDate.now());
+         //todo: дату принимать из тела запроса
         waste.setCategory(categoryRepository.findCategoryByName(wasteDTO.getCategory()));
         Account account = accountService.getAccount(wasteDTO.getAccountId());
         account.setBalance(account.getBalance().subtract(wasteDTO.getAmountSpent()));
@@ -64,6 +64,7 @@ public class WasteServiceImpl implements WasteService {
                 viewDTO.getStartDate(), viewDTO.getEndDate()).map(mapper::toDTO);
     }
 
+    @Override
     public WasteSumCategoryDTO getSumAllWasteByCategory(WasteSumCategoryDTO wasteSumCategoryDTO) {
         List<Waste> allByCategory_nameAndDateBetween = repository.findAllByCategory_NameAndDateBetween(wasteSumCategoryDTO.getCategory(),
                 wasteSumCategoryDTO.getStartDate(), wasteSumCategoryDTO.getEndDate());

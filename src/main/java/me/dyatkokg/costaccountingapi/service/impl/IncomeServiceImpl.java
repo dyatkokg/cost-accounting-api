@@ -37,7 +37,6 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public IncomeDTO addIncome(IncomeDTO incomeDTO) {
         Income income = mapper.toEntity(incomeDTO);
-        income.setDate(LocalDate.now());
         Account account = accountService.getAccount(incomeDTO.getAccountId());
         account.setBalance(account.getBalance().add(income.getAmountIncome()));
         accountService.editAccount(account.getId(), accountMapper.toDTO(account));
