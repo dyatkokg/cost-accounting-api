@@ -32,11 +32,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/account/**").authenticated()
-                .antMatchers("/category/**").authenticated()
-                .antMatchers("/waste/**").authenticated()
-                .antMatchers("/income/**").authenticated()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and().httpBasic();
         return http.build();
     }
