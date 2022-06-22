@@ -11,4 +11,6 @@ public interface CategoryRepository extends CrudRepository<Category, UUID> {
     List<Category> findAllByClientId(UUID uuid);
 
     Category findCategoryByName(String name);
+
+    boolean existsCategoriesByName(String name);
 }

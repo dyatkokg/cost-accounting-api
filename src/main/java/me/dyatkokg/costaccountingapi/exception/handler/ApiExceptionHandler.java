@@ -2,6 +2,7 @@ package me.dyatkokg.costaccountingapi.exception.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import me.dyatkokg.costaccountingapi.exception.AccountNotFoundException;
+import me.dyatkokg.costaccountingapi.exception.CategoryAlreadyExistException;
 import me.dyatkokg.costaccountingapi.exception.IncomeNotFoundException;
 import me.dyatkokg.costaccountingapi.exception.WasteNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,8 @@ import java.util.Collections;
 @ControllerAdvice
 @Slf4j
 public class ApiExceptionHandler {
-    @ExceptionHandler({AccountNotFoundException.class, WasteNotFoundException.class, UsernameNotFoundException.class, IncomeNotFoundException.class})
+    @ExceptionHandler({AccountNotFoundException.class, WasteNotFoundException.class,
+            UsernameNotFoundException.class, IncomeNotFoundException.class, CategoryAlreadyExistException.class})
     public ResponseEntity<?> handleException(RuntimeException e) {
         log.info("{}", e.getMessage());
         return ResponseEntity.badRequest().body(Collections.singletonMap("exception", e.getMessage()));

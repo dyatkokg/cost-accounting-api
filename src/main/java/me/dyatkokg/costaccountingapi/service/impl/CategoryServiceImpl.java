@@ -5,6 +5,7 @@ import me.dyatkokg.costaccountingapi.config.SecurityUtils;
 import me.dyatkokg.costaccountingapi.dto.CategoryDTO;
 import me.dyatkokg.costaccountingapi.entity.Category;
 import me.dyatkokg.costaccountingapi.entity.Client;
+import me.dyatkokg.costaccountingapi.exception.CategoryAlreadyExistException;
 import me.dyatkokg.costaccountingapi.mapper.CategoryMapper;
 import me.dyatkokg.costaccountingapi.repository.CategoryRepository;
 import me.dyatkokg.costaccountingapi.service.CategoryService;
@@ -22,6 +23,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category addCategory(CategoryDTO category) {
+        if (repository.existsCategoriesByName(category.getName())) {
+            throw new CategoryAlreadyExistException();
+        }
         category.setClient((Client) SecurityUtils.getPrincipal());
         return repository.save(mapper.toEntity(category));
     }
