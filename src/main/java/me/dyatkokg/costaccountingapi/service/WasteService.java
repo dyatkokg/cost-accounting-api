@@ -1,7 +1,7 @@
 package me.dyatkokg.costaccountingapi.service;
 
 import me.dyatkokg.costaccountingapi.dto.WasteDTO;
-import me.dyatkokg.costaccountingapi.dto.WasteDateDTO;
+import me.dyatkokg.costaccountingapi.dto.DateDTO;
 import me.dyatkokg.costaccountingapi.dto.WasteSumCategoryDTO;
 import me.dyatkokg.costaccountingapi.entity.Waste;
 import org.springframework.data.domain.Page;
@@ -13,7 +13,7 @@ public interface WasteService {
 
     Waste getWaste(UUID id);
 
-    Page<WasteDTO> getAllByClient(int page, int size, WasteDateDTO viewDTO);
+    Page<WasteDTO> getAllByClient(int page, int size, DateDTO viewDTO);
 
     WasteSumCategoryDTO getSumAllWasteByCategory(WasteSumCategoryDTO wasteSumCategoryDTO);
 }

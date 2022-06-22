@@ -3,7 +3,7 @@ package me.dyatkokg.costaccountingapi.service.impl;
 import lombok.RequiredArgsConstructor;
 import me.dyatkokg.costaccountingapi.config.SecurityUtils;
 import me.dyatkokg.costaccountingapi.dto.WasteDTO;
-import me.dyatkokg.costaccountingapi.dto.WasteDateDTO;
+import me.dyatkokg.costaccountingapi.dto.DateDTO;
 import me.dyatkokg.costaccountingapi.dto.WasteSumCategoryDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
 import me.dyatkokg.costaccountingapi.entity.Client;
@@ -61,7 +61,7 @@ public class WasteServiceImpl implements WasteService {
     }
 
     @Override
-    public Page<WasteDTO> getAllByClient(int page, int size, WasteDateDTO viewDTO) {
+    public Page<WasteDTO> getAllByClient(int page, int size, DateDTO viewDTO) {
         Client principal = (Client) SecurityUtils.getPrincipal();
         Pageable pageable = PageRequest.of(size, page, Sort.Direction.DESC, "date");
         return repository.findWasteByAccount_ClientIdAndDateBetween(principal.getId(), pageable,

@@ -2,7 +2,7 @@ package me.dyatkokg.costaccountingapi.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.dyatkokg.costaccountingapi.dto.WasteDTO;
-import me.dyatkokg.costaccountingapi.dto.WasteDateDTO;
+import me.dyatkokg.costaccountingapi.dto.DateDTO;
 import me.dyatkokg.costaccountingapi.dto.WasteSumCategoryDTO;
 import me.dyatkokg.costaccountingapi.entity.Waste;
 import me.dyatkokg.costaccountingapi.service.WasteService;
@@ -33,7 +33,7 @@ public class WasteController {
     @GetMapping("all")
     public ResponseEntity<Page<WasteDTO>> getAllWasteByClientsAccount(@RequestParam(value = "size", required = false, defaultValue = "10") int page,
                                                                       @RequestParam(value = "page", required = false, defaultValue = "0") int size,
-                                                                      @RequestBody WasteDateDTO viewDTO) {
+                                                                      @RequestBody DateDTO viewDTO) {
         return ResponseEntity.ok(service.getAllByClient(page, size, viewDTO));
     }
 
