@@ -2,17 +2,15 @@ package me.dyatkokg.costaccountingapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import me.dyatkokg.costaccountingapi.config.SecurityUtils;
-import me.dyatkokg.costaccountingapi.dto.WasteDTO;
 import me.dyatkokg.costaccountingapi.dto.DateDTO;
+import me.dyatkokg.costaccountingapi.dto.WasteDTO;
 import me.dyatkokg.costaccountingapi.dto.WasteSumCategoryDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
 import me.dyatkokg.costaccountingapi.entity.Client;
 import me.dyatkokg.costaccountingapi.entity.Waste;
-import me.dyatkokg.costaccountingapi.exception.AccountNotFoundException;
 import me.dyatkokg.costaccountingapi.exception.WasteNotFoundException;
 import me.dyatkokg.costaccountingapi.mapper.AccountMapper;
 import me.dyatkokg.costaccountingapi.mapper.WasteMapper;
-import me.dyatkokg.costaccountingapi.repository.AccountRepository;
 import me.dyatkokg.costaccountingapi.repository.CategoryRepository;
 import me.dyatkokg.costaccountingapi.repository.WasteRepository;
 import me.dyatkokg.costaccountingapi.service.AccountService;
@@ -36,8 +34,6 @@ public class WasteServiceImpl implements WasteService {
 
     private final WasteMapper mapper;
 
-    private final AccountRepository accountRepository;
-
     private final AccountService accountService;
 
     private final AccountMapper accountMapper;
@@ -49,7 +45,7 @@ public class WasteServiceImpl implements WasteService {
         Waste waste = mapper.toEntity(wasteDTO);
         waste.setDate(LocalDate.now());
         waste.setCategory(categoryRepository.findCategoryByName(wasteDTO.getCategory()));
-        Account account = accountRepository.findById(wasteDTO.getAccountId()).orElseThrow(AccountNotFoundException::new);
+        Account account = accountService.getAccount(wasteDTO.getAccountId());
         account.setBalance(account.getBalance().subtract(wasteDTO.getAmountSpent()));
         accountService.editAccount(account.getId(), accountMapper.toDTO(account));
         return mapper.toDTO(repository.save(waste));
@@ -71,10 +67,10 @@ public class WasteServiceImpl implements WasteService {
     public WasteSumCategoryDTO getSumAllWasteByCategory(WasteSumCategoryDTO wasteSumCategoryDTO) {
         List<Waste> allByCategory_nameAndDateBetween = repository.findAllByCategory_NameAndDateBetween(wasteSumCategoryDTO.getCategory(),
                 wasteSumCategoryDTO.getStartDate(), wasteSumCategoryDTO.getEndDate());
-            BigDecimal sum = allByCategory_nameAndDateBetween.stream()
-                    .map(Waste::getAmountSpent)
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
-            wasteSumCategoryDTO.setSumWaste(sum);
+        BigDecimal sum = allByCategory_nameAndDateBetween.stream()
+                .map(Waste::getAmountSpent)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        wasteSumCategoryDTO.setSumWaste(sum);
         return wasteSumCategoryDTO;
     }
 

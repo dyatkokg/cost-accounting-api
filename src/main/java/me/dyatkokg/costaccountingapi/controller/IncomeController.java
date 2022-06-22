@@ -32,8 +32,8 @@ public class IncomeController {
 
     @GetMapping("all")
     public ResponseEntity<Page<IncomeDTO>> getAllIncomeByClientsAccount(@RequestParam(value = "size", required = false, defaultValue = "10") int page,
-                                                                      @RequestParam(value = "page", required = false, defaultValue = "0") int size,
-                                                                      @RequestBody DateDTO viewDTO) {
+                                                                        @RequestParam(value = "page", required = false, defaultValue = "0") int size,
+                                                                        @RequestBody DateDTO viewDTO) {
         return ResponseEntity.ok(service.getAllByClient(page, size, viewDTO));
     }
 }

@@ -13,5 +13,6 @@ import java.time.LocalDate;
 public class DateDTO {
 
     private LocalDate startDate;
+
     private LocalDate endDate;
 }

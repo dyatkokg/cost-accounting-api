@@ -14,7 +14,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class WasteDTO {
 
-
     private UUID accountId;
 
     @NotNull(message = "Amount Spent should be presented")

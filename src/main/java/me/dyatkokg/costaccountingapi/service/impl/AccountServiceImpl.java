@@ -25,7 +25,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account addAccount(AccountDTO account) {
-      account.setClient((Client) SecurityUtils.getPrincipal());
+        account.setClient((Client) SecurityUtils.getPrincipal());
         return repository.save(mapper.toEntity(account));
     }
 
@@ -49,9 +49,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<Account> getAll() {
         Client principal = (Client) SecurityUtils.getPrincipal();
-       return new ArrayList<>(repository.findAccountByClientId(principal.getId()));
+        return new ArrayList<>(repository.findAccountByClientId(principal.getId()));
     }
-
 
 
 }

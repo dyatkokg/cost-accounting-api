@@ -21,7 +21,7 @@ public class SecurityConfig {
 
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth,PasswordEncoder passwordEncoder)
+    public void configureGlobal(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder)
             throws Exception {
         auth.userDetailsService(clientService).passwordEncoder(passwordEncoder);
     }
@@ -40,7 +40,6 @@ public class SecurityConfig {
                 .and().httpBasic();
         return http.build();
     }
-
 
 
 }
