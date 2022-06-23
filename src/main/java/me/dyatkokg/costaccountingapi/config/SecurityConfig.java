@@ -21,7 +21,7 @@ public class SecurityConfig {
 
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth,PasswordEncoder passwordEncoder)
+    public void configureGlobal(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder)
             throws Exception {
         auth.userDetailsService(clientService).passwordEncoder(passwordEncoder);
     }
@@ -35,11 +35,11 @@ public class SecurityConfig {
                 .antMatchers("/account/**").authenticated()
                 .antMatchers("/category/**").authenticated()
                 .antMatchers("/waste/**").authenticated()
+                .antMatchers("/income/**").authenticated()
                 .anyRequest().permitAll()
                 .and().httpBasic();
         return http.build();
     }
-
 
 
 }

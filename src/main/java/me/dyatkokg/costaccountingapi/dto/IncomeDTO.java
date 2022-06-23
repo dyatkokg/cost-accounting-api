@@ -12,15 +12,12 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WasteDTO {
+public class IncomeDTO {
 
     private UUID accountId;
 
-    @NotNull(message = "Amount Spent should be presented")
-    private BigDecimal amountSpent;
+    @NotNull(message = "Amount income should be presented")
+    private BigDecimal amountIncome;
 
     private LocalDate date;
-
-    @NotNull(message = "Category should be presented")
-    private String category;
 }

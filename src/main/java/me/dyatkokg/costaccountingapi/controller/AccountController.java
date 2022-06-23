@@ -40,7 +40,7 @@ public class AccountController {
     }
 
     @GetMapping("all")
-    public ResponseEntity<List<Account>> getAllByClient(){
+    public ResponseEntity<List<Account>> getAllByClient() {
         return ResponseEntity.ok(service.getAll());
     }
 

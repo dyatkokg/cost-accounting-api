@@ -10,8 +10,9 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WasteDateDTO {
+public class DateDTO {
 
     private LocalDate startDate;
+
     private LocalDate endDate;
 }

@@ -8,11 +8,11 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface WasteMapper {
 
-    @Mapping(source = "accountId",target = "account.id")
-    @Mapping(source = "category",target = "category.name")
+    @Mapping(source = "accountId", target = "account.id")
+    @Mapping(source = "category", target = "category.name")
     Waste toEntity(WasteDTO dto);
 
-    @Mapping(source = "account.id",target = "accountId")
-    @Mapping(source = "category.name",target = "category")
+    @Mapping(source = "account.id", target = "accountId")
+    @Mapping(source = "category.name", target = "category")
     WasteDTO toDTO(Waste waste);
 }
