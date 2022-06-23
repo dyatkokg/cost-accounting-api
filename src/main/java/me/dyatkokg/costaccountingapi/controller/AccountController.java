@@ -2,6 +2,8 @@ package me.dyatkokg.costaccountingapi.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.dyatkokg.costaccountingapi.dto.AccountDTO;
+import me.dyatkokg.costaccountingapi.dto.AccountTransactionDTO;
+import me.dyatkokg.costaccountingapi.dto.DateDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
 import me.dyatkokg.costaccountingapi.service.AccountService;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +46,9 @@ public class AccountController {
         return ResponseEntity.ok(service.getAll());
     }
 
-    //todo: получение транзакций по конкретному счету, вывод за конкретный период:всего поступило,
-    // всего потрачено-без детализации
-
+    @GetMapping("total/{id}")
+    public ResponseEntity<AccountTransactionDTO> getTotalByAccount(@PathVariable ("id") UUID uuid, @RequestBody DateDTO dateDTO){
+        return ResponseEntity.ok(service.getTotalByAccount(uuid,dateDTO));
+    }
 
 }

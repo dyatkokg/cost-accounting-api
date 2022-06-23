@@ -1,6 +1,8 @@
 package me.dyatkokg.costaccountingapi.service;
 
 import me.dyatkokg.costaccountingapi.dto.AccountDTO;
+import me.dyatkokg.costaccountingapi.dto.AccountTransactionDTO;
+import me.dyatkokg.costaccountingapi.dto.DateDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
 
 import java.util.List;
@@ -16,4 +18,6 @@ public interface AccountService {
     void deleteAccount(UUID id);
 
     List<Account> getAll();
+
+    AccountTransactionDTO getTotalByAccount(UUID uuid, DateDTO dateDTO);
 }
