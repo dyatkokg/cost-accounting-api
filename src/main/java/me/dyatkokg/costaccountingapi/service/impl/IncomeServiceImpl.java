@@ -10,6 +10,7 @@ import me.dyatkokg.costaccountingapi.entity.Income;
 import me.dyatkokg.costaccountingapi.exception.IncomeNotFoundException;
 import me.dyatkokg.costaccountingapi.mapper.AccountMapper;
 import me.dyatkokg.costaccountingapi.mapper.IncomeMapper;
+import me.dyatkokg.costaccountingapi.repository.IncomeCategoryRepository;
 import me.dyatkokg.costaccountingapi.repository.IncomeRepository;
 import me.dyatkokg.costaccountingapi.service.AccountService;
 import me.dyatkokg.costaccountingapi.service.IncomeService;
@@ -33,9 +34,12 @@ public class IncomeServiceImpl implements IncomeService {
 
     private final AccountMapper accountMapper;
 
+    private final IncomeCategoryRepository incomeCategoryRepository;
+
     @Override
     public IncomeDTO addIncome(IncomeDTO incomeDTO) {
         Income income = mapper.toEntity(incomeDTO);
+        income.setCategory(incomeCategoryRepository.findCategoryByName(incomeDTO.getCategory()));
         Account account = accountService.getAccount(incomeDTO.getAccountId());
         account.setBalance(account.getBalance().add(income.getAmountIncome()));
         accountService.editAccount(account.getId(), accountMapper.toDTO(account));
