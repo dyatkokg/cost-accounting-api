@@ -23,4 +23,10 @@ public interface ExpenseRepository extends PagingAndSortingRepository<Expense, U
             " join account a on e.account_id =a.id\n" +
             " where a.id = :id and  date between :startDate and :endDate",nativeQuery = true)
     BigDecimal getSumExpense(@Param("id") UUID uuid, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    @Query(value = "select sum(amount_spent)\n" +
+            "from expense e\n" +
+            " where date between :startDate and :endDate",nativeQuery = true)
+    BigDecimal getTotalExpense(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
 }

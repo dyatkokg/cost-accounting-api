@@ -5,6 +5,7 @@ import me.dyatkokg.costaccountingapi.config.SecurityUtils;
 import me.dyatkokg.costaccountingapi.dto.DateDTO;
 import me.dyatkokg.costaccountingapi.dto.ExpenseDTO;
 import me.dyatkokg.costaccountingapi.dto.ExpenseSumCategoryDTO;
+import me.dyatkokg.costaccountingapi.dto.ExpenseSumDTO;
 import me.dyatkokg.costaccountingapi.entity.Account;
 import me.dyatkokg.costaccountingapi.entity.Client;
 import me.dyatkokg.costaccountingapi.entity.Expense;
@@ -72,5 +73,14 @@ public class ExpenseServiceImpl implements ExpenseService {
         wasteSumCategoryDTO.setSumWaste(sum);
         return wasteSumCategoryDTO;
     }
+
+    @Override
+    public ExpenseSumDTO getSumAllExpense(DateDTO dateDTO) {
+        ExpenseSumDTO expenseSumDTO =new ExpenseSumDTO();
+        expenseSumDTO.setTotalExpense(repository.getTotalExpense(dateDTO.getStartDate(), dateDTO.getEndDate()));
+        return expenseSumDTO;
+
+    }
+
 
 }

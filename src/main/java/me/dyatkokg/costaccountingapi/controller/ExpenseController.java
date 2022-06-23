@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.dyatkokg.costaccountingapi.dto.DateDTO;
 import me.dyatkokg.costaccountingapi.dto.ExpenseDTO;
 import me.dyatkokg.costaccountingapi.dto.ExpenseSumCategoryDTO;
+import me.dyatkokg.costaccountingapi.dto.ExpenseSumDTO;
 import me.dyatkokg.costaccountingapi.entity.Expense;
 import me.dyatkokg.costaccountingapi.service.ExpenseService;
 import org.springframework.data.domain.Page;
@@ -43,5 +44,9 @@ public class ExpenseController {
     public ResponseEntity<ExpenseSumCategoryDTO> getSumExpenseByCategory(@RequestBody ExpenseSumCategoryDTO sumDTO) {
         return ResponseEntity.ok(service.getSumAllExpenseByCategory(sumDTO));
     }
-    //todo: сумма по ВСЕМ категориям
+
+    @GetMapping("totalSum")
+    public ResponseEntity<ExpenseSumDTO> getTotalSum(@RequestBody DateDTO dateDTO){
+        return ResponseEntity.ok(service.getSumAllExpense(dateDTO));
+    }
 }

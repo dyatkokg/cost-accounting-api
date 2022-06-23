@@ -1,6 +1,5 @@
 package me.dyatkokg.costaccountingapi.repository;
 
-import me.dyatkokg.costaccountingapi.dto.AccountTransactionDTO;
 import me.dyatkokg.costaccountingapi.entity.Income;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
