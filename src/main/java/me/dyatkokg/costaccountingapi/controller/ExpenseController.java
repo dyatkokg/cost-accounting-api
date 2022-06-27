@@ -31,8 +31,6 @@ public class ExpenseController {
         return ResponseEntity.ok(service.getExpense(id));
     }
 
-    //todo:вывод полной статистики клиента за период с группировкой по дате(день, список транзакций, получено за день-списано за день),
-    // отдельный контроллер? относится к клиенту
     @GetMapping("all")
     public ResponseEntity<Page<ExpenseDTO>> getAllExpenseByClientsAccount(@RequestParam(value = "size", required = false, defaultValue = "10") int page,
                                                                         @RequestParam(value = "page", required = false, defaultValue = "0") int size,

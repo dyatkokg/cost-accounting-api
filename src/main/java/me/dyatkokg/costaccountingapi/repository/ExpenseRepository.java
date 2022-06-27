@@ -1,5 +1,6 @@
 package me.dyatkokg.costaccountingapi.repository;
 
+import me.dyatkokg.costaccountingapi.dto.StatisticClientDTO;
 import me.dyatkokg.costaccountingapi.entity.Expense;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,4 +30,11 @@ public interface ExpenseRepository extends PagingAndSortingRepository<Expense, U
             " where date between :startDate and :endDate",nativeQuery = true)
     BigDecimal getTotalExpense(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
+
+//    @Query(value = "select e.date, sum(amount_spent) as expensePerDay from expense e \n" +
+//            "JOIN LATERAL EXTRACT(day FROM date) day ON TRUE \n" +
+//            "WHERE e.date   >= '2022-06-21' AND e.date <= '2022-06-23'  \n" +
+//            "GROUP BY e.date \n" +
+//            "ORDER BY e.date ",nativeQuery = true)
+//    List<StatisticClientDTO> getExpenseByDateBetween(LocalDate startDate, LocalDate endDate);
 }

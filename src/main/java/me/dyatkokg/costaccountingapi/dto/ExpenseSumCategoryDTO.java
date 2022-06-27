@@ -14,7 +14,7 @@ public class ExpenseSumCategoryDTO {
 
     private String category;
 
-    private BigDecimal sumWaste;
+    private BigDecimal sumExpense;
 
     private LocalDate startDate;
 

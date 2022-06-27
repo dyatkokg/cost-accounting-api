@@ -70,7 +70,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         BigDecimal sum = allByCategory_nameAndDateBetween.stream()
                 .map(Expense::getAmountSpent)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        wasteSumCategoryDTO.setSumWaste(sum);
+        wasteSumCategoryDTO.setSumExpense(sum);
         return wasteSumCategoryDTO;
     }
 
@@ -79,7 +79,6 @@ public class ExpenseServiceImpl implements ExpenseService {
         ExpenseSumDTO expenseSumDTO =new ExpenseSumDTO();
         expenseSumDTO.setTotalExpense(repository.getTotalExpense(dateDTO.getStartDate(), dateDTO.getEndDate()));
         return expenseSumDTO;
-
     }
 
 
